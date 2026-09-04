@@ -1,0 +1,30 @@
+{
+  "name": "Appsmith",
+  "user": "ubuntu",
+  "install": "bash .cursor/install.sh",
+  "start": "bash .cursor/start.sh",
+  "terminals": [
+    {
+      "name": "java-server",
+      "description": "Appsmith Java/Spring backend on http://localhost:8080 (connects to MongoDB + Redis).",
+      "command": "export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64; export PATH=\"$JAVA_HOME/bin:$PATH\"; cd app/server && ./scripts/start-dev-server.sh"
+    },
+    {
+      "name": "rts",
+      "description": "Appsmith Real-Time Service (RTS) microservice on http://localhost:8091.",
+      "command": "export PATH=\"$HOME/.nvm/versions/node/v18.17.1/bin:$PATH\"; cd app/client/packages/rts && set -o allexport && . ./.env && set +o allexport && node --require source-map-support/register dist/bundle/server.js"
+    },
+    {
+      "name": "client",
+      "description": "Appsmith React client dev server (craco/webpack) on http://localhost:3000, proxied via nginx at https://dev.appsmith.com.",
+      "command": "export PATH=\"$HOME/.nvm/versions/node/v18.17.1/bin:$PATH\"; cd app/client && yarn start"
+    }
+  ],
+  "ports": [
+    { "name": "https-proxy", "port": 443 },
+    { "name": "http-proxy", "port": 80 },
+    { "name": "client-dev", "port": 3000 },
+    { "name": "server", "port": 8080 },
+    { "name": "rts", "port": 8091 }
+  ]
+}
